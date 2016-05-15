@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+//实现两个字符串判断较短的字符串知否完全包含在较长字符串里；
+//利用快速排序思想将字母提前排好顺序；主要注重快排思想；
+
+int partition(string &str,int lo,int hi){
+    int key = str[hi];
+    int i = lo - 1;
+    int j;
+    for(j = lo;j < hi; j ++){
+        if(str[j] <= key){
+            i++;
+        swap(str[i+1],str[hi]);
+        }
+    }
+    swap(str[i+1],str[hi]);
+    return i+1;
+}
+
+void quickSort(string &str,int lo,int hi){
+    if(lo < hi){
+        int k = partition(str,lo,hi);
+        quickSort(str,lo,k-1);
+        quickSort(str,k+1,hi);
+    }
+}
+
+void compareStr(string longStr,string shortStr){
+
+    int posOne = 0;
+    int posTwo = 0;
+    while(posTwo < shortStr.length() && posOne < longStr.length()){
+        while(longStr[posOne] < shortStr[posTwo] && posOne < longStr.length())
+            posOne++;
+        if(longStr[posOne]!= shortStr[posTwo])
+            break;
+        posTwo++;
+    }
+    if(posTwo == shortStr.length())
+        cout<<"true";
+    else
+        cout<<"false";
+
+}
+
+int main(){
+
+    string longStr="ABCEDFGHIJKLMN";
+    string shortStr="CDFGBNEZ";
+    quickSort(longStr,0,longStr.length()-1);
+    quickSort(shortStr,0,shortStr.length()-1);
+    compareStr(longStr,shortStr);
+    return 0;
+}

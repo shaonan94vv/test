@@ -1,0 +1,46 @@
+//利用三部翻转法实现左转字符串
+//2016/5/15
+
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+//创建三部反转函数
+char *invert(char *start,char *end){
+    char tmp,*tmpd = start;
+    while(start != NULL && end != NULL && start < end){
+        tmp = *start;
+        *start = *end;
+        *end = tmp;
+        start++;
+        end--;
+    }
+    return tmpd;
+}
+
+void *left(char *str,int m){
+    int len = strlen(str);
+    invert(str,str + (m - 1));
+    invert(str + m,str + (len - 1));
+    invert(str,str + (len - 1));
+    return str;
+}
+
+int main(){
+
+    //const char *str1;
+    string ch = "abcd";
+    int n = ch.length();
+    //char str[n];
+    //memcpy(str,ch,n);
+
+    char* str1 = new char[n];
+
+    //str1 = ch.c_str();
+    strcpy(str1,ch.c_str());
+    left(str1,3);
+    cout<<str1<<endl;
+
+    return 0;
+}
